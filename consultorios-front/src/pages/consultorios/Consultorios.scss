@@ -1,0 +1,36 @@
+@use "src/comun/estilo/color";
+
+.consultorio {
+
+  .table-container {
+    color: color.$background-color-primary;
+
+    .table-cell-titulo {
+      color: #973636;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .table-cell {
+      color: color.$background-color-primary;
+      text-align: center;
+    }
+
+  }
+
+  .boton-de-agregado {
+    margin: 0;
+    top: auto;
+    right: 20px;
+    bottom: 20px;
+    left: auto;
+    position: fixed;
+    font-weight: bold;
+
+    Button {
+      color: color.$background-color-primary;
+      border-radius: 20px;
+      padding: 20px;
+    }
+  }
+}

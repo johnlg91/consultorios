@@ -1,0 +1,21 @@
+@use "src/comun/estilo/color";
+
+.Tab-Grupos {
+  width: 100%;
+  justify-content: space-evenly;
+  background-color: color.$background-color-primary;
+  padding-top: 5px;
+
+  .titulo {
+    padding: 5px;
+  }
+
+  .Tab {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 30px;
+    padding: 5px 5px 0;
+    align-items: center;
+    text-align: center;
+    min-width: 100px;
+  }
+}

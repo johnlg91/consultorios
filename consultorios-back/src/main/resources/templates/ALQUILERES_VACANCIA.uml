@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.ALQUILERES_VACANCIA</OriginalElement>
+  <nodes>
+    <node x="337.0" y="463.0">78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.USUARIOS</node>
+    <node x="1339.0" y="-38.0">78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.TRANSACCIONES_DE_ALQUILERES</node>
+    <node x="-311.0" y="463.0">78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.EXPENSAS</node>
+    <node x="47.0" y="-60.0">78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.CONSULTORIOS</node>
+    <node x="-311.0" y="188.0">78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.CONTRATOS_DE_ALQUILER</node>
+    <node x="677.0000000000001" y="-16.0">78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.ALQUILERES_VACANCIA</node>
+    <node x="391.0000000000001" y="-148.0">78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.PROFESIONALES</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.CONTRATOS_DE_ALQUILER" target="78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.PROFESIONALES" relationship="REFERENCES">
+      <point x="0.0" y="-0.0" />
+      <point x="514.0000000000001" y="303.0" />
+      <point x="0.0" y="-0.0" />
+    </edge>
+    <edge source="78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.ALQUILERES_VACANCIA" target="78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.CONTRATOS_DE_ALQUILER" relationship="REFERENCES">
+      <point x="0.0" y="-0.0" />
+      <point x="988.0" y="303.0" />
+      <point x="0.0" y="-0.0" />
+    </edge>
+    <edge source="78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.TRANSACCIONES_DE_ALQUILERES" target="78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.CONTRATOS_DE_ALQUILER" relationship="REFERENCES">
+      <point x="0.0" y="-0.0" />
+      <point x="1641.0" y="303.0" />
+      <point x="0.0" y="-0.0" />
+    </edge>
+    <edge source="78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.CONTRATOS_DE_ALQUILER" target="78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.CONSULTORIOS" relationship="REFERENCES">
+      <point x="0.0" y="-0.0" />
+      <point x="199.0" y="303.0" />
+      <point x="0.0" y="-0.0" />
+    </edge>
+  </edges>
+  <settings layout="Wide" zoom="0.649036592988194" showDependencies="false" x="868.9913358686588" y="351.69795082383723" />
+  <SelectedNodes>
+    <node>78581b94-23a7-4793-94cd-239c362b98e2.TABLE:CONSULTORIOS_SCHEMA_BD.ALQUILERES_VACANCIA</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+

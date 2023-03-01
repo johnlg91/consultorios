@@ -1,0 +1,34 @@
+@use "src/comun/estilo/color";
+
+.profesional {
+
+  .table-container {
+    color: color.$background-color-primary;
+
+    .table-cell-titulo {
+      color: #973636;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .table-cell {
+      color: color.$background-color-primary;
+      text-align: center;
+    }
+
+  }
+
+  .boton-de-agregado-container {
+    display: flex;
+    justify-content: flex-end;
+    padding-block: 20px;
+
+
+    Button {
+      color: color.$background-color-primary;
+      border-radius: 20px;
+      padding: 20px;
+    }
+  }
+}
+

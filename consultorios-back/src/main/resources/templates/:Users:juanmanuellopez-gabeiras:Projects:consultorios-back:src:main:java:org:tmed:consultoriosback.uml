@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/juanmanuellopez-gabeiras/Projects/consultorios-back/src/main/java/org/tmed/consultoriosback</OriginalElement>
+  <nodes>
+    <node x="794.0" y="2018.5">org.tmed.consultoriosback.repository.AlquileresVacanciaRepositorio</node>
+    <node x="1541.5" y="1158.0">org.tmed.consultoriosback.model.TransaccionDeAlquiler</node>
+    <node x="1339.5" y="2023.0">org.tmed.consultoriosback.security.ReactAppProxy</node>
+    <node x="609.5" y="756.5">org.tmed.consultoriosback.repository.UsuariosRepositorio</node>
+    <node x="1010.5" y="-14.0">org.tmed.consultoriosback.controllers.ContratosController</node>
+    <node x="118.0" y="1153.0">org.tmed.consultoriosback.model.Profesional</node>
+    <node x="1918.5" y="2018.5">org.tmed.consultoriosback.security.MvcConfig</node>
+    <node x="201.5" y="627.0">org.tmed.consultoriosback.security.ServicioDeUsuarioDeSeguridad</node>
+    <node x="1650.5" y="41.5">org.tmed.consultoriosback.repository.ContratosDeAlquilerRepositorio</node>
+    <node x="1544.5" y="536.5">org.tmed.consultoriosback.repository.ExpensasRepositorio</node>
+    <node x="-221.5" y="2020.0">org.tmed.consultoriosback.model.AlquilerVacancia</node>
+    <node x="465.5" y="2016.5">org.tmed.consultoriosback.repository.ConsultoriosRepositorio</node>
+    <node x="-221.5" y="1425.0">org.tmed.consultoriosback.model.componentesJson.CoordenadaDeMatriz</node>
+    <node x="1084.0" y="356.5">org.tmed.consultoriosback.repository.TransaccionesDeAlquilerRepositorio</node>
+    <node x="815.0" y="2132.0">org.tmed.consultoriosback.controllers.AlquileresVacanciaController</node>
+    <node x="168.0" y="756.0">org.tmed.consultoriosback.security.WebSecurityConfig</node>
+    <node x="1109.0" y="1165.0">org.tmed.consultoriosback.model.componentesJson.TransaccionDeAlquilerConNombreDeProfesional</node>
+    <node x="2152.0" y="1158.0">org.tmed.consultoriosback.model.Expensa</node>
+    <node x="1102.5" y="525.0">org.tmed.consultoriosback.controllers.ReportesController</node>
+    <node x="1577.0" y="692.0">org.tmed.consultoriosback.controllers.ExpensasController</node>
+    <node x="1838.0" y="1158.0">org.tmed.consultoriosback.model.Consultorio</node>
+    <node x="117.5" y="2181.0">org.tmed.consultoriosback.controllers.ProfesionalController</node>
+    <node x="-196.0" y="1150.0">org.tmed.consultoriosback.model.componentesJson.DiaDeLaSemana</node>
+    <node x="125.0" y="2016.5">org.tmed.consultoriosback.repository.ProfesionalesRepositorio</node>
+    <node x="420.0" y="1152.0">org.tmed.consultoriosback.model.componentesJson.ContratoConNombres</node>
+    <node x="645.0" y="921.0">org.tmed.consultoriosback.controllers.UsuarioController</node>
+    <node x="-214.0" y="561.0">org.tmed.consultoriosback.security.SpringSecurityUserDetails</node>
+    <node x="760.0" y="1152.0">org.tmed.consultoriosback.model.ContratoDeAlquiler</node>
+    <node x="458.0" y="2172.0">org.tmed.consultoriosback.controllers.ConsultorioController</node>
+    <node x="-219.5" y="2498.5">org.tmed.consultoriosback.ConsultoriosBackApplication</node>
+    <node x="1612.0" y="312.0">org.tmed.consultoriosback.controllers.TransaccionesDeAlquilerController</node>
+    <node x="-167.5" y="-2.0">org.tmed.consultoriosback.model.Usuario</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.tmed.consultoriosback.security.WebSecurityConfig" target="org.tmed.consultoriosback.security.ServicioDeUsuarioDeSeguridad" relationship="CREATE">
+      <point x="0.0" y="-49.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.controllers.TransaccionesDeAlquilerController" target="org.tmed.consultoriosback.repository.TransaccionesDeAlquilerRepositorio" relationship="TO_ONE">
+      <point x="-280.0" y="0.0" />
+      <point x="208.0" y="0.0" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.controllers.ExpensasController" target="org.tmed.consultoriosback.repository.ExpensasRepositorio" relationship="TO_ONE">
+      <point x="0.0" y="-93.0" />
+      <point x="0.0" y="48.5" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.security.SpringSecurityUserDetails" target="org.tmed.consultoriosback.model.Usuario" relationship="TO_ONE">
+      <point x="0.0" y="-104.0" />
+      <point x="0.0" y="247.0" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.controllers.ReportesController" target="org.tmed.consultoriosback.repository.ExpensasRepositorio" relationship="TO_ONE">
+      <point x="189.5" y="0.0" />
+      <point x="-167.5" y="0.0" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.controllers.ContratosController" target="org.tmed.consultoriosback.repository.TransaccionesDeAlquilerRepositorio" relationship="TO_ONE">
+      <point x="0.0" y="159.0" />
+      <point x="0.0" y="-48.5" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.controllers.ContratosController" target="org.tmed.consultoriosback.repository.ContratosDeAlquilerRepositorio" relationship="TO_ONE">
+      <point x="281.5" y="0.0" />
+      <point x="-281.5" y="0.0" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.controllers.AlquileresVacanciaController" target="org.tmed.consultoriosback.repository.AlquileresVacanciaRepositorio" relationship="TO_ONE">
+      <point x="0.0" y="-93.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.controllers.ConsultorioController" target="org.tmed.consultoriosback.repository.ConsultoriosRepositorio" relationship="TO_ONE">
+      <point x="0.0" y="-93.0" />
+      <point x="0.0" y="48.5" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.security.ServicioDeUsuarioDeSeguridad" target="org.tmed.consultoriosback.security.SpringSecurityUserDetails" relationship="CREATE">
+      <point x="-150.5" y="0.0" />
+      <point x="166.0" y="0.0" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.controllers.ProfesionalController" target="org.tmed.consultoriosback.repository.ProfesionalesRepositorio" relationship="TO_ONE">
+      <point x="0.0" y="-104.0" />
+      <point x="0.0" y="48.5" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.security.WebSecurityConfig" target="org.tmed.consultoriosback.repository.UsuariosRepositorio" relationship="TO_ONE">
+      <point x="184.0" y="0.0" />
+      <point x="-182.5" y="0.0" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.controllers.UsuarioController" target="org.tmed.consultoriosback.repository.UsuariosRepositorio" relationship="TO_ONE">
+      <point x="0.0" y="-104.0" />
+      <point x="0.0" y="48.5" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.controllers.ReportesController" target="org.tmed.consultoriosback.repository.TransaccionesDeAlquilerRepositorio" relationship="TO_ONE">
+      <point x="0.0" y="-60.0" />
+      <point x="0.0" y="48.5" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.security.ServicioDeUsuarioDeSeguridad" target="org.tmed.consultoriosback.repository.UsuariosRepositorio" relationship="TO_ONE">
+      <point x="150.5" y="0.0" />
+      <point x="792.0" y="665.0" />
+      <point x="0.0" y="-48.5" />
+    </edge>
+    <edge source="org.tmed.consultoriosback.model.componentesJson.CoordenadaDeMatriz" target="org.tmed.consultoriosback.model.componentesJson.DiaDeLaSemana" relationship="TO_ONE">
+      <point x="0.0" y="-280.0" />
+      <point x="0.0" y="115.0" />
+    </edge>
+  </edges>
+  <settings layout="Channel" zoom="0.5124136208565956" showDependencies="true" x="906.2371389557986" y="703.9275663602783" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

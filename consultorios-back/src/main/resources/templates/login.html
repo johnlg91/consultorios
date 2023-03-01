@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang=""
+      style="background-color: #0c3454">
+<head>
+    <title>Ingreso a consultorios</title>
+</head>
+<body style="display: flex;align-items: center;justify-content: center;flex-flow: column; height: 30vw;">
+<div th:if="${param.logout}" style="color: aliceblue">
+    Ha salido del sistema.
+</div>
+<h3 style="color: aliceblue"> INGRESE SU USUARIO Y CONTRASE&Ntilde;A</h3>
+<form th:action="@{/login}" method="post"
+      style="display: flex; align-items: flex-end; flex-flow: column; color: aliceblue">
+    <div style="padding: 10px; color: aliceblue;"><label> Usuario : <input type="text" name="username"/> </label></div>
+    <div style="padding: 10px; color: aliceblue;"><label> Contrase&ntilde;a: <input type="password" name="password"/>
+    </label></div>
+    <div style="padding: 10px; color: aliceblue;"><input type="submit" value="Ingresar"/></div>
+</form>
+<div th:if="${param.error}" style="color: aliceblue">
+    Usuario o contrase&ntilde;a invalida.
+</div>
+</body>
+</html>

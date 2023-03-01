@@ -1,0 +1,12 @@
+@use "src/comun/estilo/color";
+
+.App-container {
+  //border-top-left-radius: 5px;
+  //border-top-right-radius: 5px;
+  //box-shadow: -10px -10px rgba(28, 25, 25, 0.18);
+  background-color: color.$background-color-secundary;
+  min-height: 100%;
+  display: flex;
+  flex-flow: column;
+  overflow: hidden;
+}

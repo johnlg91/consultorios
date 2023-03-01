@@ -1,0 +1,108 @@
+@use "src/comun/estilo/color";
+
+.vacancias {
+  //
+  //th {
+  //  position: sticky;
+  //  top: 0;
+  //}
+  //
+  //table {
+  //  position: relative;
+  //}
+  overflow: hidden;
+
+  .table-container {
+    color: color.$background-color-primary;
+    overflow: scroll;
+    border-collapse: separate; /* Don't collapse */
+    border-spacing: 0;
+
+    .table-head {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      border-collapse: separate;
+      //border-inline: red solid 1px;
+
+
+      .table-row {
+        //border-inline: #973636 solid 1px;
+        z-index: 4;
+        background-color: color.$background-color-secundary;
+      }
+
+      .table-cell-titulo {
+        color: color.$background-color-primary;
+        background-color: color.$background-color-secundary;
+        font-weight: bold;
+        text-align: center;
+        padding: 6px;
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+        left: 0;
+      }
+
+      .table-cell {
+        border: 1px solid rgb(224, 224, 224);
+        border-collapse: separate;
+        color: color.$background-color-primary;
+        z-index: 50;
+        text-align: center;
+      }
+    }
+
+    .table-body {
+
+      .table-row {
+        border-inline: #973636 solid 1px;
+      }
+
+      .table-cell-titulo {
+        color: color.$background-color-primary;
+        font-weight: bold;
+        text-align: center;
+        border-right: 1px solid rgb(224, 224, 224);
+        padding: 6px;
+      }
+
+      .table-cell {
+        color: color.$background-color-primary;
+        text-align: center;
+      }
+
+      .ocupado {
+        background-color: #973636;
+        text-align: center;
+      }
+
+      .desocupado {
+        border: aliceblue solid 1px;
+        background-color: green;
+        text-align: center;
+      }
+    }
+
+  }
+
+  .boton-suma-semana {
+    margin: 0;
+    top: auto;
+    right: 20px;
+    bottom: 20px;
+    left: auto;
+    position: fixed;
+    font-weight: bold;
+  }
+
+  .boton-resta-semana {
+    margin: 0;
+    top: auto;
+    left: 20px;
+    bottom: 20px;
+    right: auto;
+    position: fixed;
+    font-weight: bold;
+  }
+}

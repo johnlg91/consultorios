@@ -1,0 +1,14 @@
+###
+GET http://localhost:8080/consultorios/all
+
+###
+GET http://localhost:8080/consultorios
+
+###
+GET http://localhost:8080/consultorios/1
+
+###
+POST http://localhost:8080/consultorios
+
+###
+DELETE http://localhost:8080/consultorios/1

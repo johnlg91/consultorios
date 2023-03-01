@@ -1,0 +1,69 @@
+###
+GET http://localhost:8080/profesional
+
+###
+GET http://localhost:8080/profesionales
+
+
+###
+GET http://localhost:8080/profesionales/1
+
+<> 2022-08-24T231106.200.json
+<> 2022-08-24T231058.404.json
+
+
+###
+GET http://localhost:8080/profesionales/dni/311111119
+
+
+
+###
+POST http://localhost:8080/profesionales
+Content-Type: application/json
+
+{
+  "dni": 40133983,
+  "nombre": "Juan",
+  "apellido": "Lopez",
+  "sobrenombre": "nombre",
+  "especialidad": "psiquiatria",
+  "fechaDeSubscripcion": "2022-08-03",
+  "direccion": "Av, Siempre viva 134",
+  "telefonoCelular": "1111111119",
+  "eMail": "juanma@mail.com",
+  "notas": "Aca hay muchas notas"
+}
+
+<> 2022-08-24T232624.200.json
+
+###
+PUT http://localhost:8080/profesionales
+Content-Type: application/json
+
+{
+  "id": 9,
+  "dni": 40133983,
+  "nombre": "MANUEL",
+  "apellido": "Lopez",
+  "sobrenombre": "nombre",
+  "especialidad": "psiquiatria",
+  "fechaDeSubscripcion": "2022-08-03",
+  "direccion": "Av, Siempre viva 134",
+  "telefonoCelular": "1111111119",
+  "eMail": "juanma@mail.com",
+  "notas": "Aca hay muchas notas"
+}
+
+<> 2022-08-25T163929.404.json
+<> 2022-08-25T131533.200.json
+<> 2022-08-25T131518.200.json
+<> 2022-08-25T131442.404.json
+<> 2022-08-25T131425.404.json
+
+###
+DELETE http://localhost:8080/profesionales/3
+
+<> 2022-09-17T221322.500.json
+<> 2022-09-17T221208.500.json
+<> 2022-09-17T221200.500.json
+<> 2022-09-17T101116.500.json
