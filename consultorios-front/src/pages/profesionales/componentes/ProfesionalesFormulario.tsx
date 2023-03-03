@@ -2,7 +2,7 @@ import * as React from "react";
 import { Button, Dialog, Grid, Paper, Typography } from "@mui/material";
 import { Field, Form, Formik, FormikHelpers, FormikProps } from "formik";
 import { FormTextField } from "../../../comun/componentes/FormTextField";
-import { ESQUEMAS } from "../../../comun";
+import { deDateToStringYMD, ESQUEMAS } from "../../../comun";
 import { Profesional } from "../ProfesionalesAPI";
 
 interface FormularioProps {
@@ -18,6 +18,7 @@ const ProfesionalesFormulario = (props: FormularioProps) => {
 	const {
 		editar, enviarFormulario, abrirFormulario, cerrarFormulario, valoresIniciales = {
 			dni: null,
+			fechaDeSubscripcion: "",
 			nombre: "",
 			apellido: "",
 			eMail: "",
@@ -40,7 +41,7 @@ const ProfesionalesFormulario = (props: FormularioProps) => {
 						values: Profesional,
 						formikHelpers: FormikHelpers<Profesional>,
 					) => {
-						enviarFormulario(values);
+						enviarFormulario({...values, fechaDeSubscripcion: deDateToStringYMD(new Date())});
 						formikHelpers.setSubmitting(false);
 						cerrarFormulario();
 					}}

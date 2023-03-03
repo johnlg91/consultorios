@@ -5,7 +5,7 @@ yup.setLocale(es);
 
 const ESQUEMAS = {
 	PROFESIONALES: yup.object({
-		dni: yup.number().min(8, "Minimo 8 caracteres").required(),
+		dni: yup.number().positive().min(8, "Minimo 1 caracteres").max(99999999, "Maximo 9 caracteres").required(),
 		eMail: yup.string().email().required(),
 		nombre: yup.string().required(),
 		apellido: yup.string().required(),

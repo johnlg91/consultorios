@@ -58,6 +58,7 @@ const Profesionales = () => {
 					<TableHead>
 						<TableRow>
 							<TableCell className={"table-cell-titulo"}>DNI</TableCell>
+							<TableCell className={"table-cell-titulo"}>Subscripción</TableCell>
 							<TableCell className={"table-cell-titulo"}>E-Mail</TableCell>
 							<TableCell className={"table-cell-titulo"}>Teléfono</TableCell>
 							<TableCell className={"table-cell-titulo"}>Sobrenombre</TableCell>
@@ -74,6 +75,7 @@ const Profesionales = () => {
 							profesionales.map((profesional) => (
 								<TableRow key={profesional.id}>
 									<TableCell className={"table-cell"}>{profesional.dni}</TableCell>
+									<TableCell className={"table-cell"}>{profesional.fechaDeSubscripcion}</TableCell>
 									<TableCell className={"table-cell"}>{profesional.eMail}</TableCell>
 									<TableCell className={"table-cell"}>{profesional.telefonoCelular}</TableCell>
 									<TableCell className={"table-cell"}>{profesional.sobrenombre}</TableCell>

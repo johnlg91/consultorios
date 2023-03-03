@@ -27,7 +27,8 @@ const ContratosFormulario = (props: FormularioProps) => {
 	const [profesionales, setProfesionales] = useState<Profesional[]>([]);
 
 	useEffect(() => {
-		getConsultorios().then(({ data }) => setConsultorios(data));
+		getConsultorios().then(({ data }) => setConsultorios(data.sort((c1, c2) => c1.numeroDeConsultorio - c2.numeroDeConsultorio)));
+		//TDOD: sortear estos
 		getProfesionales().then(({ data }) => setProfesionales(data));
 	}, []);
 

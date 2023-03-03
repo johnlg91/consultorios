@@ -52,7 +52,9 @@ const Vacancias = () => {
 
 	const cargarConsultorios = () => {
 		getConsultorios()
-			.then(({ data }) => setConsultorios(data))
+			.then(({ data }) =>
+				setConsultorios(
+					data.sort((c1, c2) => c1.numeroDeConsultorio - c2.numeroDeConsultorio)))
 			.then(() => cargarVacancias(),
 			)
 		;
@@ -179,7 +181,6 @@ const Vacancias = () => {
 			<TableContainer sx={{ maxHeight: calculareTableHeigh() }} className={"table-container"}>
 				<Table>
 					<TableHead
-						// sx={{ backgroundColor:"#0c3454"}}
 						className={"table-head"}
 					>
 						<>

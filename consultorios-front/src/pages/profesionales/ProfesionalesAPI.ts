@@ -8,7 +8,7 @@ export interface Profesional {
 	apellido: string;
 	sobrenombre: string;
 	especialidad: string;
-	fechaDeSubscripcion?: string;
+	fechaDeSubscripcion: string;
 	direccion: string;
 	telefonoCelular: string;
 	eMail: string;
