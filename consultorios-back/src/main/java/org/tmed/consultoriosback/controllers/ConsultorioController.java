@@ -41,8 +41,8 @@ public class ConsultorioController {
 
     @PutMapping(value = "/consultorios")
     public Consultorio putconsultorios(@Validated @RequestBody Consultorio consultorio) {
-        if (consultoriosRep.existsById(consultorio.getId())) return consultoriosRep.save(consultorio);
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + consultorio.getId() + " not found.");
+        if (consultoriosRep.existsById(consultorio.id())) return consultoriosRep.save(consultorio);
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + consultorio.id() + " not found.");
     }
 
     @DeleteMapping("/consultorios/{id}")

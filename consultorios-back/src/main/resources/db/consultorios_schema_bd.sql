@@ -1,3 +1,7 @@
+create schema if not exists CONSULTORIOS_SCHEMA_BD;
+
+use CONSULTORIOS_SCHEMA_BD;
+
 create table if not exists CONSULTORIOS
 (
     ID                    int auto_increment
