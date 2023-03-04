@@ -64,8 +64,8 @@ public class AlquileresVacanciaController {
 
     @PutMapping(value = "/vacancias")
     public AlquilerVacancia putAlquilerVacancia(@Validated @RequestBody AlquilerVacancia contrato) {
-        if (alquileresVacanciaRep.existsById(contrato.getId())) return alquileresVacanciaRep.save(contrato);
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + contrato.getId() + " not found.");
+        if (alquileresVacanciaRep.existsById(contrato.id())) return alquileresVacanciaRep.save(contrato);
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + contrato.id() + " not found.");
     }
 
     @DeleteMapping("/vacancias/{id}")

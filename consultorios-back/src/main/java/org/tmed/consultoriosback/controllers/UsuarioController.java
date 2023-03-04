@@ -2,8 +2,6 @@ package org.tmed.consultoriosback.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -43,8 +41,8 @@ public class UsuarioController {
 
     @PutMapping(value = "/usuarios")
     public Usuario putUsuarios(@Validated @RequestBody Usuario usuario) {
-        if (usuariosRepositorio.existsById(usuario.getId())) return saveUsuario(usuario);
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + usuario.getId() + " not found.");
+        if (usuariosRepositorio.existsById(usuario.id())) return saveUsuario(usuario);
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + usuario.id() + " not found.");
     }
 
     @DeleteMapping("/usuarios/{id}")
@@ -53,8 +51,6 @@ public class UsuarioController {
     }
 
     private Usuario saveUsuario(Usuario usuario) {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        usuario.setContrasennia(encoder.encode(usuario.getContrasennia()));
-        return usuariosRepositorio.save(usuario);
+        return usuariosRepositorio.save(usuario.encodePassword());
     }
 }

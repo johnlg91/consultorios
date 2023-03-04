@@ -48,8 +48,8 @@ public class ProfesionalController {
 
     @PutMapping(value = "/profesionales")
     public Profesional putProfesionales(@Validated @RequestBody Profesional profesional) {
-        if (profesionales.existsById(profesional.getId())) return profesionales.save(profesional);
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + profesional.getId() + " not found.");
+        if (profesionales.existsById(profesional.id())) return profesionales.save(profesional);
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + profesional.id() + " not found.");
     }
 
     @DeleteMapping("/profesionales/{id}")

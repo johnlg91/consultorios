@@ -50,8 +50,8 @@ public class TransaccionesDeAlquilerController {
 
     @PutMapping(value = "/pagos")
     public TransaccionDeAlquiler putconsultorios(@Validated @RequestBody TransaccionDeAlquiler pagos) {
-        if (transaccionesRep.existsById(pagos.getId())) return transaccionesRep.save(pagos);
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + pagos.getId() + " not found.");
+        if (transaccionesRep.existsById(pagos.id())) return transaccionesRep.save(pagos);
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + pagos.id() + " not found.");
     }
 
 //    @DeleteMapping("/consultorios/{id}")

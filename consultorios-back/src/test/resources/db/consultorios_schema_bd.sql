@@ -14,7 +14,7 @@ create table if not exists CONSULTORIOS
     ESPECIALIDADES        varchar(150)         not null,
     OCULTO                tinyint(1) default 0 not null
 )
-    comment 'Tabla de consultorios' engine = InnoDB;
+comment 'Tabla de consultorios';
 
 create table if not exists EXPENSAS
 (
@@ -28,8 +28,7 @@ MENSUALMENTE: Gasto que se repite mensualmente
 BIMENSUAL: Se repite cada dos meses',
     FECHA_DE_PAGO    date                                                             null,
     OCULTO           tinyint(1)                                       default 0       not null
-)
-    engine = InnoDB;
+);
 
 create table if not exists PROFESIONALES
 (
@@ -48,8 +47,7 @@ create table if not exists PROFESIONALES
     OCULTO                tinyint(1) default 0 not null,
     constraint PROFESSIONALS_DNI_uindex
         unique (DNI)
-)
-    engine = InnoDB;
+);
 
 create table if not exists CONTRATOS_DE_ALQUILER
 (
@@ -60,15 +58,14 @@ create table if not exists CONTRATOS_DE_ALQUILER
     TIPO_DE_ALQUILER                varchar(30)          not null,
     INICIO_DEL_CONTRATO_DE_ALQUILER date                 not null,
     FIN_DEL_CONTRATO                date                 not null,
-    COSTO_TOTAL                     int                  not null,
+    COSTO_POR_MODULO                int                  not null,
     NOTAS                           varchar(300)         null,
     OCULTO                          tinyint(1) default 0 not null,
     constraint RENT_CONTRACT_OFFICES_ID_fk
         foreign key (ID_CONSULTORIO) references CONSULTORIOS (ID),
     constraint RENT_CONTRACT_PROFESSIONALS_ID_fk
         foreign key (ID_PROFESIONAL) references PROFESIONALES (ID)
-)
-    engine = InnoDB;
+);
 
 create table if not exists ALQUILERES_VACANCIA
 (
@@ -114,6 +111,6 @@ create table if not exists USUARIOS
     ES_ADMIN       tinyint(1)           null,
     OCULTO         tinyint(1) default 0 not null
 )
-    comment 'Tablde usuarioa' engine = InnoDB;
+    comment 'Tabla de usuarios';
 
 

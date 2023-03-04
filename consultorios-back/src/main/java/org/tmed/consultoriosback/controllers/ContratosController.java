@@ -8,18 +8,17 @@ import org.springframework.web.server.ResponseStatusException;
 import org.tmed.consultoriosback.model.ContratoDeAlquiler;
 import org.tmed.consultoriosback.model.componentesJson.ContratoConNombres;
 import org.tmed.consultoriosback.repository.ContratosDeAlquilerRepositorio;
-import org.tmed.consultoriosback.repository.TransaccionesDeAlquilerRepositorio;
+
+import java.util.Optional;
 
 @RestController
 public class ContratosController {
 
     private final ContratosDeAlquilerRepositorio contratosRep;
-    private final TransaccionesDeAlquilerRepositorio transaccionesDeAlquilerRep;
 
 
     @Autowired
-    public ContratosController(ContratosDeAlquilerRepositorio contratosRep, TransaccionesDeAlquilerRepositorio transaccionesDeAlquilerRep) {
-        this.transaccionesDeAlquilerRep = transaccionesDeAlquilerRep;
+    public ContratosController(ContratosDeAlquilerRepositorio contratosRep) {
         this.contratosRep = contratosRep;
     }
 
@@ -72,17 +71,37 @@ public class ContratosController {
 
     @PostMapping("/contratos")
     public ContratoDeAlquiler postContrato(@Validated @RequestBody ContratoDeAlquiler contrato) {
+        getContractForRange(contrato).ifPresent(id -> {
+            throw new ResponseStatusException(HttpStatus.FOUND, "Contract with Id: " + id + " overlaps.");
+        });
         return contratosRep.save(contrato);
     }
 
+
     @PutMapping(value = "/contratos")
     public ContratoDeAlquiler putContratos(@Validated @RequestBody ContratoDeAlquiler contrato) {
-        if (contratosRep.existsById(contrato.getId())) return contratosRep.save(contrato);
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + contrato.getId() + " not found.");
+        if (!contratosRep.existsById(contrato.id())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + contrato.id() + " not found.");
+        }
+        getContractForRange(contrato).ifPresent(id -> {
+            if (id != contrato.id())
+                throw new ResponseStatusException(HttpStatus.FOUND, "Contract with Id: " + id + " overlaps.");
+        });
+        return contratosRep.save(contrato);
     }
 
     @DeleteMapping("/contratos/{id}")
     public void deleteContratos(@PathVariable("id") long id) {
         contratosRep.deleteContrato(id);
     }
+
+    private Optional<Integer> getContractForRange(ContratoDeAlquiler contrato) {
+        return contratosRep.existsContractForRange(
+                contrato.idConsultorio(),
+                contrato.idProfesional(),
+                contrato.inicioDelContratoDeAlquiler(),
+                contrato.finDelContrato()
+        );
+    }
+
 }

@@ -21,12 +21,12 @@ public class SpringSecurityUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return usuario.getContrasennia();
+        return usuario.contrasennia();
     }
 
     @Override
     public String getUsername() {
-        return usuario.getNombreUsuario();
+        return usuario.nombreUsuario();
     }
 
     @Override
@@ -46,6 +46,6 @@ public class SpringSecurityUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return !usuario.getOculto();
+        return !usuario.oculto();
     }
 }
