@@ -1,7 +1,7 @@
 //file:noinspection GroovyUnusedAssignment
 plugins {
-    id 'org.springframework.boot' version '2.7.2'
-    id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+    id 'org.springframework.boot' version '2.7.2' as Provider<String>
+    id 'io.spring.dependency-management' version '1.0.12.RELEASE' as Provider<String>
     id 'java'
 }
 
@@ -23,11 +23,6 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    compileOnly 'org.projectlombok:lombok:1.18.26'
-    annotationProcessor 'org.projectlombok:lombok:1.18.26'
-    testCompileOnly 'org.projectlombok:lombok:1.18.26'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
 }
 
 tasks.named('test') {
