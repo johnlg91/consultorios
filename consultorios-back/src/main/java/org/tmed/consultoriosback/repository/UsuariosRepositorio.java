@@ -13,7 +13,16 @@ import java.util.Optional;
 public interface UsuariosRepositorio extends CrudRepository<Usuario, Long> {
 
     @Query("SELECT * FROM USUARIOS WHERE OCULTO = 0")
-    Iterable<Usuario> getUsuario();
+    Iterable<Usuario> getUsuarios();
+
+    @Query("""
+        SELECT *
+        FROM USUARIOS U
+        JOIN CONTRATOS_DE_ALQUILER CDA
+        ON U.ID = CDA.ID_PROFESIONAL AND CDA.FIN_DEL_CONTRATO < CURDATE()
+        WHERE OCULTO = 0
+    """)
+    Iterable<Usuario> findActiveUsers();
 
     @Query("SELECT * FROM USUARIOS WHERE NOMBRE_USUARIO = :usuario AND OCULTO = 0")
     Optional<Usuario> findByNombreDeUsuario(@Param("usuario") String nombreUsuario);

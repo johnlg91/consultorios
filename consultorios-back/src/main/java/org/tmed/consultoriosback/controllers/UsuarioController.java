@@ -18,17 +18,22 @@ public class UsuarioController {
     }
 
     @GetMapping("/usuarios/all")
-    public Iterable<Usuario> getAllUsuarioss() {
+    public Iterable<Usuario> getAllUsuarios() {
         return usuariosRepositorio.findAll();
+    }
+
+    @GetMapping("/usuarios/activos")
+    public Iterable<Usuario> getUsuariosActivos() {
+        return usuariosRepositorio.findActiveUsers();
     }
 
     @GetMapping("/usuarios")
     public Iterable<Usuario> getUsuarios() {
-        return usuariosRepositorio.getUsuario();
+        return usuariosRepositorio.getUsuarios();
     }
 
     @GetMapping(value = "/usuarios/{id}")
-    public Usuario getUsuarios(@PathVariable("id") long id) {
+    public Usuario getUsuario(@PathVariable("id") long id) {
         return usuariosRepositorio.findById(id).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "Id: " + id + " not found."
         ));
