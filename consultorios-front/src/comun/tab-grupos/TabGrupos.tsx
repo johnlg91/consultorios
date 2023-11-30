@@ -7,11 +7,11 @@ import Consultorios from "../../pages/consultorios/Consultorios";
 import Contratos from "../../pages/contratos/Contratos";
 import Vacancias from "../../pages/vacancias/Vacancias";
 import Expensas from "../../pages/expensas/Expensas";
-import ContratosSinPagar from "../../pages/pagos/ContratosSinPagar";
 import Reportes from "../../pages/reportes/Reportes";
 import Usuarios from "../../pages/usuarios/Usuarios";
 import URL from "../../axiosconfig";
 import { Logout } from "@mui/icons-material";
+import Pagos from "../../pages/pagos/Pagos";
 
 const PROFESIONALES = "PROFESIONALES";
 const CONSULTORIOS = "CONSULTORIOS";
@@ -24,7 +24,7 @@ const USUARIOS = "USUARIOS";
 
 const TabGrupos = () => {
 
-	const [moduloSeleccionado, setModuloSeleccionado] = useState<string>(PLANILLA);
+	const [moduloSeleccionado, setModuloSeleccionado] = useState<string>(PAGOS);
 	const [esAdmin, setEsAdmin] = useState<boolean>(false);
 
 	// useEffect(() => {
@@ -44,7 +44,7 @@ const TabGrupos = () => {
 		case EXPENSAS:
 			return <Expensas />;
 		case PAGOS:
-			return <ContratosSinPagar />;
+			return <Pagos />;
 		case REPORTES:
 			return <Reportes />;
 		case USUARIOS:
