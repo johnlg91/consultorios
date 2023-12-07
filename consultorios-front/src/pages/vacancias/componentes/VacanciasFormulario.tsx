@@ -87,13 +87,13 @@ const VacanciasFormulario = (props: FormularioProps) => {
 									<Grid container spacing={2}>
 										<Grid item container xs={12} justifyContent={"center"}>
 											<Typography variant={"h4"}>
-												{editar ? "Modificar " : "Crear "}
+												{editar ? "Modificar " : "Agregar "}
 												Vacancia
 											</Typography>
 										</Grid>
 										<Field
 											name="idContratoDeAlquiler"
-											label="Contra De alquiler"
+											label="Contrato de alquiler"
 											component={SelectField}
 										>
 											{contratos.length <= 0 ?
@@ -127,7 +127,7 @@ const VacanciasFormulario = (props: FormularioProps) => {
 										</Field>
 										<Field
 											name="terminaVacancia"
-											label="hora de Salida"
+											label="Hora de Salida"
 											component={selectField}
 										>
 											{horas.map((hora, index) => {

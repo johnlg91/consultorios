@@ -8,10 +8,11 @@ import {
 	Profesional,
 } from "./ProfesionalesAPI";
 import "../../comun/estilo/ModuloEstandar.scss";
-import { Acciones, AlertaDeConfirmacion } from "../../comun";
+import { Acciones, AlertaDeConfirmacion, TableCellSorted } from "../../comun";
 import ProfesionalesFormulario from "./componentes/ProfesionalesFormulario";
 import { Add } from "@mui/icons-material";
 
+type profKeys = keyof Profesional;
 const Profesionales = () => {
 
 	const [profesionales, setProfesionales] = useState<Profesional[]>([]);
@@ -20,6 +21,10 @@ const Profesionales = () => {
 	const [idParaBorrar, setIdParaBorrar] = useState<number | undefined>(-1);
 	const [editar, setEditar] = useState<boolean>(false);
 	const [idParaEditar, setIdParaEditar] = useState<number | undefined>(-1);
+
+	const [sortField, setSortField] = useState<keyof Profesional | null>(null);
+	const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+
 
 	useEffect(() => {
 		cargarProfesionales();
@@ -51,6 +56,46 @@ const Profesionales = () => {
 		}
 	};
 
+	const handleSort = (field: keyof Profesional) => {
+		const isAsc = sortField === field && sortDirection === "asc";
+		setSortDirection(isAsc ? "desc" : "asc");
+		setSortField(field);
+	};
+
+	const sortedProfesionales = [...profesionales].sort((a, b) => {
+		if (!sortField) return 0;
+
+		const valueA = a[sortField];
+		const valueB = b[sortField];
+
+		// Check if the field is a date field
+		if (sortField === "fechaDeSubscripcion") {
+			// Check if both dates are valid strings
+			if (typeof valueA === "string" && valueA.trim() !== "" && typeof valueB === "string" && valueB.trim() !== "") {
+				const dateA = new Date(valueA);
+				const dateB = new Date(valueB);
+				return sortDirection === "asc" ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+			} else {
+				// Handle cases where one or both dates are empty or invalid
+				// For example, you might decide to sort empty dates to the end
+				if (valueA && !valueB) {
+					return sortDirection === "asc" ? -1 : 1;
+				} else if (!valueA && valueB) {
+					return sortDirection === "asc" ? 1 : -1;
+				}
+				return 0;
+			}
+		}
+
+		if (typeof valueA === "number" && typeof valueB === "number") {
+			return sortDirection === "asc" ? valueA - valueB : valueB - valueA;
+		} else if (typeof valueA === "string" && typeof valueB === "string") {
+			return sortDirection === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+		}
+
+		return 0;
+	});
+
 	return (
 		<div className={"modulo"}>
 			<TableContainer className={"table-container"}>
@@ -58,13 +103,18 @@ const Profesionales = () => {
 					<TableHead>
 						<TableRow>
 							<TableCell className={"table-cell-titulo"}>DNI</TableCell>
-							<TableCell className={"table-cell-titulo"}>Subscripción</TableCell>
+							<TableCellSorted label={"Subsripción"} field={"fechaDeSubscripcion"} sortField={sortField}
+											 sortDirection={sortDirection} handleSort={handleSort} />
 							<TableCell className={"table-cell-titulo"}>E-Mail</TableCell>
 							<TableCell className={"table-cell-titulo"}>Teléfono</TableCell>
-							<TableCell className={"table-cell-titulo"}>Sobrenombre</TableCell>
-							<TableCell className={"table-cell-titulo"}>Nombre</TableCell>
-							<TableCell className={"table-cell-titulo"}>Apellido</TableCell>
-							<TableCell className={"table-cell-titulo"}>Especialidad</TableCell>
+							<TableCellSorted label={"Sobrenombre"} field={"sobrenombre"} sortField={sortField}
+											 sortDirection={sortDirection} handleSort={handleSort} />
+							<TableCellSorted label={"Nombre"} field={"nombre"} sortField={sortField}
+											 sortDirection={sortDirection} handleSort={handleSort} />
+							<TableCellSorted label={"Apellido"} field={"apellido"} sortField={sortField}
+											 sortDirection={sortDirection} handleSort={handleSort} />
+							<TableCellSorted label={"Especialidad"} field={"especialidad"} sortField={sortField}
+											 sortDirection={sortDirection} handleSort={handleSort} />
 							<TableCell className={"table-cell-titulo"}>Dirección</TableCell>
 							<TableCell className={"table-cell-titulo"}>Notas</TableCell>
 							<TableCell className={"table-cell-titulo"}>Acciones</TableCell>
@@ -72,7 +122,7 @@ const Profesionales = () => {
 					</TableHead>
 					<TableBody>
 						{
-							profesionales.map((profesional) => (
+							sortedProfesionales.map((profesional) => (
 								<TableRow key={profesional.id}>
 									<TableCell className={"table-cell"}>{profesional.dni}</TableCell>
 									<TableCell className={"table-cell"}>{profesional.fechaDeSubscripcion}</TableCell>
