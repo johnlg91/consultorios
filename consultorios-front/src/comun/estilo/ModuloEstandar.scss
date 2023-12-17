@@ -18,6 +18,14 @@
       color: color.$background-color-primary;
       text-align: center;
       padding: 10px;
+      min-height: 5px;
+
+      .truncate-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px; // Adjust as needed
+      }
     }
 
   }

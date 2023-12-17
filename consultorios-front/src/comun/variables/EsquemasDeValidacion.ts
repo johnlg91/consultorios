@@ -34,7 +34,7 @@ const ESQUEMAS = {
 			is: (v: string) => v === "NORMAL",
 			then: yup.date().required(),
 		}),
-		costoTotal: yup.number().required().min(0),
+		costoPorModulo: yup.number().required().min(0),
 		notas: yup.string(),
 	}),
 	EXPENSAS: yup.object({

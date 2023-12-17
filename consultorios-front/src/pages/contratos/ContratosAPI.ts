@@ -9,7 +9,7 @@ export interface Contrato {
 	tipoDeAlquiler: string;
 	inicioDelContratoDeAlquiler: Date;
 	finDelContrato: Date;
-	costoTotal: number | null;
+	costoPorModulo: number | null;
 	notas: string;
 	oculto?: boolean;
 }
@@ -21,7 +21,8 @@ export interface ContratoConNombre {
 	tipoDeAlquiler: string;
 	inicioDelContratoDeAlquiler: string;
 	finDelContrato: string;
-	costoTotal: number | null;
+	costoPorModulo: number | null;
+	costoAPagar: number | null;
 	notas: string;
 	oculto?: boolean;
 }

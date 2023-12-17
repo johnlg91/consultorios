@@ -1,39 +1,15 @@
 import "../../comun/estilo/ModuloEstandar.scss";
 import { AlertaDeConfirmacion } from "../../comun";
 import PagosFormulario from "./componentes/PagosFormulario";
-import {
-	IconButton,
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableHead,
-	TableRow,
-	TextField,
-} from "@mui/material";
-import { Add } from "@mui/icons-material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useEffect, useState } from "react";
-import { borrarPago, Pago } from "./PagosAPI";
+import { ContratoConCosto, crearPago, getContratosConCosto, Pago } from "./PagosAPI";
+import PagosField from "./componentes/PagosField";
+import { borrarContrato } from "../contratos/ContratosAPI";
+
 
 const Pagos = () => {
-	const [pagos, setPagos] = useState(
-		[
-			{
-				id: 1,
-				nombre: "juan",
-				apellido: "lopez",
-				contratos: 4,
-				saldo: -1000,
-			},
-			{
-				id: 2,
-				nombre: "Albert",
-				apellido: "nuñez",
-				contratos: 4,
-				saldo: 69420,
-			},
-		],
-	);
+	const [contratosConCosto, setContratosConCosto] = useState<ContratoConCosto[]>([]);
 	const [abrirFormulario, setAbrirFormulario] = useState<boolean>(false);
 	const [abrirAlerta, setAbrirAlerta] = useState<boolean>(false);
 	const [idParaBorrar, setIdParaBorrar] = useState<number | undefined>(-1);
@@ -41,13 +17,13 @@ const Pagos = () => {
 	const [idParaEditar, setIdParaEditar] = useState<number | undefined>(-1);
 
 	useEffect(() => {
-		// cargarPagos();
+		cargarContratosConCosto();
 	}, []);
 
-	// const cargarPagos = () => {
-	// 	getPagos()
-	// 		.then(({ data }) => setPagos(data));
-	// };
+	const cargarContratosConCosto = () => {
+		getContratosConCosto()
+			.then(({ data }) => setContratosConCosto(data));
+	};
 
 	const handleCerrarFormulario = () => {
 		setEditar(false);
@@ -55,14 +31,14 @@ const Pagos = () => {
 	};
 
 	const borrar = () => {
-		borrarPago(idParaBorrar)
+		borrarContrato(idParaBorrar)
 			.then(() => {
-				setPagos(pagos.filter(p => p.id !== idParaBorrar));
+				setContratosConCosto(contratosConCosto.filter(ccc => ccc.idContrato !== idParaBorrar));
 			})
 			.then(() => {
 				setAbrirAlerta(false);
 				setIdParaBorrar(-1);
-			});
+			}).catch(e => console.error("Ereor al borrar: " + e));
 	};
 
 	const enviarFormulario = (valores: Pago) => {
@@ -75,41 +51,62 @@ const Pagos = () => {
 		// }
 	};
 
+	const handlePago = (idContrato: number, cantidad: number) => {
+		crearPago({
+			idContratoDeAlquiler: idContrato,
+			fechaDeTransaccion: new Date(),
+			cantidad: cantidad,
+		}).then(() => {
+			// Una vez que el pago se ha realizado con éxito, actualiza el estado
+			// de contratosConCosto para reflejar el nuevo monto restante
+			const nuevosContratos = contratosConCosto.map(contrato => {
+				if (contrato.idContrato === idContrato) {
+					// Reduce la deuda del contrato especificado
+					return { ...contrato, montoRestante: contrato.montoRestante - cantidad };
+				}
+				return contrato;
+			});
+
+			setContratosConCosto(nuevosContratos);
+		}).catch(error => {
+			// Maneja cualquier error que ocurra durante el proceso de pago
+			console.error("Error al realizar el pago:", error);
+		});
+	};
+
 	return (
 		<div className={"modulo"}>
 			<TableContainer className={"table-container"}>
 				<Table>
 					<TableHead>
 						<TableRow>
+							<TableCell className={"table-cell-titulo"}>Num del Contrato</TableCell>
 							<TableCell className={"table-cell-titulo"}>Profesional</TableCell>
-							<TableCell className={"table-cell-titulo"}>Cantidad de contratos</TableCell>
-							<TableCell className={"table-cell-titulo"}>SAldo</TableCell>
-							<TableCell className={"table-cell-titulo"}>Cantidad</TableCell>
+							<TableCell className={"table-cell-titulo"}>Num del consultorio</TableCell>
+							<TableCell className={"table-cell-titulo"}>Costo total</TableCell>
+							<TableCell className={"table-cell-titulo"}>Deuda</TableCell>
 							<TableCell className={"table-cell-titulo"}>Acciones</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
 						{
-							pagos.map((pago) => {
+							contratosConCosto.map((ccc) => {
 								return (
-									<TableRow key={pago.id}>
+									<TableRow key={ccc.idContrato}>
+										<TableCell className={"table-cell"}>{ccc.idContrato}</TableCell>
 										<TableCell
-											className={"table-cell"}>{pago.nombre + " " + pago.apellido}</TableCell>
-										<TableCell className={"table-cell"}>{pago.contratos}</TableCell>
-										<TableCell className={"table-cell"}>{pago.saldo}</TableCell>
-										<TableCell className={"table-cell"}>
-											<TextField size={"small"} type={"number"} sx={{ bgcolor: "white" }}>
-
-											</TextField>
-										</TableCell>
-										<TableCell className={"table-cell"} sx={{ bgcolor: "white" }}>
-											<IconButton size={"small"}>
-												<Add />
-												Modificar saldo
-											</IconButton>
-										</TableCell>
-
-
+											className={"table-cell"}>{ccc.nombreProfesional + " " + ccc.apellido}</TableCell>
+										<TableCell className={"table-cell"}>{ccc.numeroDeConsultorio}</TableCell>
+										<TableCell className={"table-cell"}>{ccc.valorContrato}</TableCell>
+										<TableCell className={"table-cell"}>{ccc.montoRestante}</TableCell>
+										<PagosField
+											handlePago={handlePago}
+											idContrato={ccc.idContrato}
+											alBorrar={() => {
+												setIdParaBorrar(ccc.idContrato);
+												setAbrirAlerta(true);
+											}}
+										/>
 										{/*<Acciones*/}
 										{/*	alBorrar={() => {*/}
 										{/*		setIdParaBorrar(pago.id);*/}
@@ -125,6 +122,9 @@ const Pagos = () => {
 								);
 							})
 						}
+						<TableRow>
+							<TableCell sx={{ height: 50 }} className={"table-cell"} />
+						</TableRow>
 					</TableBody>
 				</Table>
 			</TableContainer>

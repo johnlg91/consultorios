@@ -28,7 +28,7 @@ const ContratosFormulario = (props: FormularioProps) => {
 
 	useEffect(() => {
 		getConsultorios().then(({ data }) => setConsultorios(data.sort((c1, c2) => c1.numeroDeConsultorio - c2.numeroDeConsultorio)));
-		//TDOD: sortear estos
+		//TODO: sortear estos
 		getProfesionales().then(({ data }) => setProfesionales(data));
 	}, []);
 
@@ -88,7 +88,7 @@ const ContratosFormulario = (props: FormularioProps) => {
 									component={SelectField}
 								>
 									<MenuItem value={"NORMAL"}>Normal</MenuItem>
-									<MenuItem value={"EXCEPCION"}>Excepcion</MenuItem>
+									<MenuItem value={"EXCEPCION"}>Excepción</MenuItem>
 								</Field>
 								<Field
 									component={DatePickerField}
@@ -103,7 +103,7 @@ const ContratosFormulario = (props: FormularioProps) => {
 									textField={{ helperText: "Helper text", variant: "filled" }}
 								/>
 								<Field
-									name="costoTotal"
+									name="costoPorModulo"
 									label="Costo"
 									component={FormTextField}
 								/>

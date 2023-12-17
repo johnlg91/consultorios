@@ -41,10 +41,10 @@ const TabGrupos = () => {
 			return <Vacancias />;
 		case CONTRATOS:
 			return <Contratos />;
-		case EXPENSAS:
-			return <Expensas />;
 		case PAGOS:
 			return <Pagos />;
+		case EXPENSAS:
+			return <Expensas />;
 		case REPORTES:
 			return <Reportes />;
 		case USUARIOS:
@@ -67,16 +67,16 @@ const TabGrupos = () => {
 				</Grid>
 				<Tab titulo={"Planilla"} selected={moduloSeleccionado === PLANILLA}
 					 onClick={() => setModuloSeleccionado(PLANILLA)} />
+				<Tab titulo={"Contratos"} selected={moduloSeleccionado === CONTRATOS}
+					 onClick={() => setModuloSeleccionado(CONTRATOS)} />
+				<Tab titulo={"Pagos"} selected={moduloSeleccionado === PAGOS}
+					 onClick={() => setModuloSeleccionado(PAGOS)} />
 				<Tab titulo={"Profesionales"} selected={moduloSeleccionado === PROFESIONALES}
 					 onClick={() => setModuloSeleccionado(PROFESIONALES)} />
 				<Tab titulo={"Consultorios"} selected={moduloSeleccionado === CONSULTORIOS}
 					 onClick={() => setModuloSeleccionado(CONSULTORIOS)} />
-				<Tab titulo={"Contratos"} selected={moduloSeleccionado === CONTRATOS}
-					 onClick={() => setModuloSeleccionado(CONTRATOS)} />
 				<Tab titulo={"Expensas"} selected={moduloSeleccionado === EXPENSAS}
 					 onClick={() => setModuloSeleccionado(EXPENSAS)} />
-				<Tab titulo={"Pagos"} selected={moduloSeleccionado === PAGOS}
-					 onClick={() => setModuloSeleccionado(PAGOS)} />
 				<Tab titulo={"Reportes"} selected={moduloSeleccionado === REPORTES}
 					 onClick={() => setModuloSeleccionado(REPORTES)} />
 				<Tab titulo={"Usuarios"} selected={moduloSeleccionado === USUARIOS}

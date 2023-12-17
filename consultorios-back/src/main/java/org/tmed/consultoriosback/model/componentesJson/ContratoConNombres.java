@@ -15,21 +15,21 @@ public class ContratoConNombres {
 
     private java.sql.Date inicioDelContratoDeAlquiler;
     private java.sql.Date finDelContrato;
-    private long costoTotal;
+    private long costoPorModulo;
     private String notas;
     private boolean oculto;
 
     public ContratoConNombres() {
     }
 
-    public ContratoConNombres(long id, long numeroDeConsultorio, String sobrenombre, String tipoDeAlquiler, Date inicioDelContratoDeAlquiler, Date finDelContrato, long costoTotal, String notas, boolean oculto) {
+    public ContratoConNombres(long id, long numeroDeConsultorio, String sobrenombre, String tipoDeAlquiler, Date inicioDelContratoDeAlquiler, Date finDelContrato, long costoPorModulo, String notas, boolean oculto) {
         this.id = id;
         this.numeroDeConsultorio = numeroDeConsultorio;
         this.sobrenombre = sobrenombre;
         this.tipoDeAlquiler = tipoDeAlquiler;
         this.inicioDelContratoDeAlquiler = inicioDelContratoDeAlquiler;
         this.finDelContrato = finDelContrato;
-        this.costoTotal = costoTotal;
+        this.costoPorModulo = costoPorModulo;
         this.notas = notas;
         this.oculto = oculto;
     }
@@ -82,12 +82,12 @@ public class ContratoConNombres {
         this.finDelContrato = finDelContrato;
     }
 
-    public long getCostoTotal() {
-        return costoTotal;
+    public long getCostoPorModulo() {
+        return costoPorModulo;
     }
 
-    public void setCostoTotal(long costoTotal) {
-        this.costoTotal = costoTotal;
+    public void setCostoPorModulo(long costoPorModulo) {
+        this.costoPorModulo = costoPorModulo;
     }
 
     public String getNotas() {

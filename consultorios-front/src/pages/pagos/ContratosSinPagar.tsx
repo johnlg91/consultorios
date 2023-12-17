@@ -18,7 +18,7 @@ const Contratos = () => {
 		tipoDeAlquiler: "",
 		inicioDelContratoDeAlquiler: new Date(),
 		finDelContrato: new Date(),
-		costoTotal: null,
+		costoPorModulo: null,
 		notas: "",
 	});
 
@@ -39,7 +39,7 @@ const Contratos = () => {
 				fechaDeTransaccion: new Date(),
 				tipo: "DEBITO",
 				metodoDePago: "EFECTIVO",
-				cantidad: contrato.costoTotal as number,
+				cantidad: contrato.costoPorModulo as number,
 			});
 		});
 		agregarPagos(nuevosPagos).then(() => cargarContratos()).then(() => setAbrirAlerta(false));
@@ -81,7 +81,7 @@ const Contratos = () => {
 										<TableCell
 											className={"table-cell"}>{contrato.notas} </TableCell>
 										<TableCell
-											className={"table-cell"}>{contrato.costoTotal} </TableCell>
+											className={"table-cell"}>{contrato.costoPorModulo} </TableCell>
 										<TableCell className={"table-cell"}>
 											<Checkbox sx={{ color: "white" }} onClick={() => manejarCheck(contrato)}
 													  value={contratosPagados.includes(contrato)} />

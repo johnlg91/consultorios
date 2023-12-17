@@ -10,7 +10,7 @@ import org.tmed.consultoriosback.model.Consultorio;
 @Repository
 public interface ConsultoriosRepositorio extends CrudRepository<Consultorio, Long> {
 
-    @Query("SELECT * FROM CONSULTORIOS WHERE OCULTO = 0")
+    @Query("SELECT * FROM CONSULTORIOS WHERE OCULTO = 0 ORDER BY NUMERO_DE_CONSULTORIO")
     Iterable<Consultorio> getConsultorios();
 
     @Modifying

@@ -90,6 +90,9 @@ const Usuarios = () => {
 								);
 							})
 						}
+						<TableRow>
+							<TableCell sx={{ height: 50 }} className={"table-cell"} />
+						</TableRow>
 					</TableBody>
 				</Table>
 			</TableContainer>

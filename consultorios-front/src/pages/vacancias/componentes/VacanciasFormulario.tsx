@@ -100,10 +100,10 @@ const VacanciasFormulario = (props: FormularioProps) => {
 												<MenuItem>
 													No se encuentras contratos para esta fecha o consultorio
 												</MenuItem> :
-												contratos.map(({ id, numeroDeConsultorio, sobrenombre, costoTotal }) =>
+												contratos.map(({ id, numeroDeConsultorio, sobrenombre, costoPorModulo }) =>
 													<MenuItem key={id} value={id}>
 														Contrato: {id}, NºConsultorio: {numeroDeConsultorio},
-														Profesional: {sobrenombre}, Costo: {costoTotal}
+														Profesional: {sobrenombre}, Costo: {costoPorModulo}
 													</MenuItem>)}
 										</Field>
 										<Field

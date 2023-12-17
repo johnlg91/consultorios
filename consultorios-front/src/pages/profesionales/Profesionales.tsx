@@ -1,4 +1,4 @@
-import { Fab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Fab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 import {
 	borrarProfesional,
@@ -133,8 +133,11 @@ const Profesionales = () => {
 									<TableCell className={"table-cell"}>{profesional.apellido}</TableCell>
 									<TableCell className={"table-cell"}>{profesional.especialidad}</TableCell>
 									<TableCell className={"table-cell"}>{profesional.direccion}</TableCell>
-									<TableCell className={"table-cell"}>{profesional.notas}</TableCell>
-									<Acciones
+									<TableCell className={"table-cell"}>
+										<Tooltip title={profesional.notas || ""} placement="bottom-end">
+											<div className="truncate-text">{profesional.notas}</div>
+										</Tooltip>
+									</TableCell> <Acciones
 										alBorrar={() => {
 											setIdParaBorrar(profesional.id);
 											setAbrirAlerta(true);
@@ -148,6 +151,9 @@ const Profesionales = () => {
 								</TableRow>
 							))
 						}
+						<TableRow>
+							<TableCell sx={{ height: 50 }} className={"table-cell"} />
+						</TableRow>
 					</TableBody>
 				</Table>
 			</TableContainer>

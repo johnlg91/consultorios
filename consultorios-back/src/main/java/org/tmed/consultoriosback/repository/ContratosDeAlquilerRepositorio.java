@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.tmed.consultoriosback.model.ContratoDeAlquiler;
+import org.tmed.consultoriosback.model.DTO.ContratoSinPagar;
 import org.tmed.consultoriosback.model.componentesJson.ContratoConNombres;
 
 import java.sql.Date;
@@ -24,7 +25,9 @@ public interface ContratosDeAlquilerRepositorio extends CrudRepository<ContratoD
                     CDA.TIPO_DE_ALQUILER,
                     CDA.INICIO_DEL_CONTRATO_DE_ALQUILER,
                     CDA.FIN_DEL_CONTRATO,
-                    CDA.COSTO_POR_MODULO, CDA.NOTAS
+                    CDA.COSTO_POR_MODULO,
+                    CDA.MONTO_A_PAGAR,
+                    CDA.NOTAS
             FROM ((CONTRATOS_DE_ALQUILER CDA
             INNER JOIN CONSULTORIOS C ON CDA.ID_CONSULTORIO = C.ID)
             INNER JOIN PROFESIONALES ON CDA.ID_PROFESIONAL = PROFESIONALES.ID)
@@ -56,6 +59,7 @@ public interface ContratosDeAlquilerRepositorio extends CrudRepository<ContratoD
                 CDA.INICIO_DEL_CONTRATO_DE_ALQUILER,
                 CDA.FIN_DEL_CONTRATO,
                 CDA.COSTO_POR_MODULO,
+                CDA.MONTO_A_PAGAR,
                 CDA.NOTAS
             FROM CONTRATOS_DE_ALQUILER CDA
               INNER JOIN CONSULTORIOS C ON CDA.ID_CONSULTORIO = C.ID
@@ -67,16 +71,28 @@ public interface ContratosDeAlquilerRepositorio extends CrudRepository<ContratoD
             """)
     Iterable<ContratoConNombres> getContratosPorNumeroDeConsultorio(@Param("fecha") String fecha, @Param("numConsultorio") long numConsultorio);
 
-    @Query("""
-            SELECT * FROM CONTRATOS_DE_ALQUILER CDA
-              WHERE OCULTO = 0
-              AND :mes BETWEEN INICIO_DEL_CONTRATO_DE_ALQUILER AND FIN_DEL_CONTRATO
-              AND ID NOT IN (SELECT ID_CONTRATO_DE_ALQUILER
-                             FROM TRANSACCIONES_DE_ALQUILERES TDA
-                             WHERE month(FECHA_DE_TRANSACCION) = month(:mes)
-                               and year(FECHA_DE_TRANSACCION) = year(:mes))
+    @Query(""" 
+                SELECT
+                    cda.ID,
+                    cda.ID_CONSULTORIO,
+                    cda.ID_PROFESIONAL,
+                    cda.COSTO_POR_MODULO,
+                    COALESCE(cda.COSTO_POR_MODULO * TIMESTAMPDIFF(MONTH, cda.INICIO_DEL_CONTRATO_DE_ALQUILER, cda.FIN_DEL_CONTRATO), 0) AS valor_contrato,
+                    (cda.COSTO_POR_MODULO * TIMESTAMPDIFF(MONTH, cda.INICIO_DEL_CONTRATO_DE_ALQUILER, cda.FIN_DEL_CONTRATO)) - COALESCE(SUM(tda.CANTIDAD), 0) AS monto_restante,
+                    cda.INICIO_DEL_CONTRATO_DE_ALQUILER,
+                    cda.FIN_DEL_CONTRATO
+                    FROM
+                        CONTRATOS_DE_ALQUILER cda
+                            LEFT JOIN TRANSACCIONES_DE_ALQUILERES tda ON cda.ID = tda.ID_CONTRATO_DE_ALQUILER
+                                AND month(tda.FECHA_DE_TRANSACCION) = month(current_date())
+                                AND year(tda.FECHA_DE_TRANSACCION) = year(current_date())
+                    WHERE
+                        tda.ID IS NULL
+                        AND cda.OCULTO = 0
+                        AND cda.FIN_DEL_CONTRATO >= current_date()
+                    GROUP BY cda.ID
             """)
-    Iterable<ContratoDeAlquiler> getContratosSinPagar(@Param("mes") String mes);
+    Iterable<ContratoSinPagar> getContratosSinPagar();
 
     @Query("SELECT * FROM CONTRATOS_DE_ALQUILER WHERE TIPO_DE_ALQUILER = 'NORMAL'")
     Iterable<ContratoDeAlquiler> getContratosNormales();

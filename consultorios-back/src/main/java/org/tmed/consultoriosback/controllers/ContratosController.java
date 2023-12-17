@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.tmed.consultoriosback.model.ContratoDeAlquiler;
+import org.tmed.consultoriosback.model.DTO.ContratoSinPagar;
 import org.tmed.consultoriosback.model.componentesJson.ContratoConNombres;
 import org.tmed.consultoriosback.repository.ContratosDeAlquilerRepositorio;
 
@@ -45,11 +46,16 @@ public class ContratosController {
         return contratosRep.getContratosPorNumeroDeConsultorio(fecha, numConsultorio);
     }
 
+//    @GetMapping("/contratos/apagar")
+//    public Iterable<ContratoDeAlquiler> getContratosSinPagar(
+//            @Validated
+//            @RequestParam(name = "fecha") String fecha) {
+//        return contratosRep.getContratosSinPagar(fecha);
+//    }
+
     @GetMapping("/contratos/apagar")
-    public Iterable<ContratoDeAlquiler> getContratosSinPagar(
-            @Validated
-            @RequestParam(name = "fecha") String fecha) {
-        return contratosRep.getContratosSinPagar(fecha);
+    public Iterable<ContratoSinPagar> getContratosSinPagar() {
+        return contratosRep.getContratosSinPagar();
     }
 
     @GetMapping("/contratos/excepcionales")

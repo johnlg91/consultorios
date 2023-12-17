@@ -15,6 +15,9 @@ public interface ProfesionalesRepositorio extends CrudRepository<Profesional, Lo
     @Query("SELECT * FROM PROFESIONALES WHERE OCULTO = 0")
     Iterable<Profesional> getProfesionales();
 
+    @Query("SELECT * FROM PROFESIONALES WHERE ID = :id AND OCULTO = 0")
+    Profesional getProfesionales(@Param("id") long id);
+
     @Query("SELECT * FROM PROFESIONALES WHERE DNI = :dni AND OCULTO = 0")
     Optional<Profesional> findByDni(@Param("dni") long dni);
 

@@ -14,22 +14,25 @@ import { Acciones, AlertaDeConfirmacion } from "../../comun";
 import { Add } from "@mui/icons-material";
 import ContratosFormulario from "./componentes/ContratosFormulario";
 
+
 const Contratos = () => {
+	const currentDate = new Date();
+	const contratoParaEditarInitialState = {
+		idConsultorio: 0,
+		idProfesional: 0,
+		tipoDeAlquiler: "",
+		inicioDelContratoDeAlquiler: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+		finDelContrato: new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0),
+		costoPorModulo: null,
+		notas: "",
+	};
 	const [contratos, setContratos] = useState<ContratoConNombre[]>([]);
 	const [abrirFormulario, setAbrirFormulario] = useState<boolean>(false);
 	const [abrirAlerta, setAbrirAlerta] = useState<boolean>(false);
 	const [idParaBorrar, setIdParaBorrar] = useState<number | undefined>(-1);
 	const [editar, setEditar] = useState<boolean>(false);
 	const [idParaEditar, setIdParaEditar] = useState<number | undefined>(-1);
-	const [contratoParaEditar, setContratoParaEditar] = useState<Contrato>({
-		idConsultorio: 0,
-		idProfesional: 0,
-		tipoDeAlquiler: "",
-		inicioDelContratoDeAlquiler: new Date(),
-		finDelContrato: new Date(),
-		costoTotal: null,
-		notas: "",
-	});
+	const [contratoParaEditar, setContratoParaEditar] = useState<Contrato>(contratoParaEditarInitialState);
 
 	useEffect(() => {
 		cargarContratos();
@@ -109,7 +112,7 @@ const Contratos = () => {
 										<TableCell
 											className={"table-cell"}>{contrato.notas} </TableCell>
 										<TableCell
-											className={"table-cell"}>{contrato.costoTotal} </TableCell>
+											className={"table-cell"}>{contrato.costoPorModulo} </TableCell>
 										<Acciones
 											alBorrar={() => {
 												setIdParaBorrar(contrato.id);
@@ -125,6 +128,9 @@ const Contratos = () => {
 								);
 							})
 						}
+						<TableRow>
+							<TableCell sx={{ height: 50, border: 0 }} />
+						</TableRow>
 					</TableBody>
 				</Table>
 			</TableContainer>
@@ -140,16 +146,7 @@ const Contratos = () => {
 				cerrarFormulario={handleCerrarFormulario}
 				enviarFormulario={enviarFormulario}
 				valoresIniciales={
-					editar ? contratoParaEditar :
-						{
-							idConsultorio: -1,
-							idProfesional: -1,
-							tipoDeAlquiler: "",
-							inicioDelContratoDeAlquiler: new Date(),
-							finDelContrato: new Date(),
-							costoTotal: null,
-							notas: "",
-						}}
+					editar ? contratoParaEditar : contratoParaEditarInitialState}
 			/>
 			<AlertaDeConfirmacion
 				abierto={abrirAlerta} handleCerrar={() => setAbrirAlerta(false)}

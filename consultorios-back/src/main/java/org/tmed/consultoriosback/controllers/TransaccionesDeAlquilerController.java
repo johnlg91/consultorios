@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.tmed.consultoriosback.model.TransaccionDeAlquiler;
+import org.tmed.consultoriosback.model.componentesJson.ContratoConCosto;
 import org.tmed.consultoriosback.repository.TransaccionesDeAlquilerRepositorio;
 
 import java.util.ArrayList;
@@ -36,20 +37,25 @@ public class TransaccionesDeAlquilerController {
         ));
     }
 
+    @GetMapping("/pagos/costos")
+    public Iterable<ContratoConCosto> getContratosConCosto() {
+        return transaccionesRep.getContratosConPagos();
+    }
+
     @PostMapping("/pagos")
-    public TransaccionDeAlquiler postconsultorios(@Validated @RequestBody TransaccionDeAlquiler pagos) {
+    public TransaccionDeAlquiler postTransacciones(@Validated @RequestBody TransaccionDeAlquiler pagos) {
         return transaccionesRep.save(pagos);
     }
 
     @PostMapping("/pagos/varios")
-    public Iterable<TransaccionDeAlquiler> postconsultorios(@Validated @RequestBody Iterable<TransaccionDeAlquiler> pagos) {
+    public Iterable<TransaccionDeAlquiler> postTransacciones(@Validated @RequestBody Iterable<TransaccionDeAlquiler> pagos) {
         ArrayList<TransaccionDeAlquiler> nuevosPagos = new ArrayList<>();
         for (TransaccionDeAlquiler t : pagos) nuevosPagos.add(transaccionesRep.save(t));
         return nuevosPagos;
     }
 
     @PutMapping(value = "/pagos")
-    public TransaccionDeAlquiler putconsultorios(@Validated @RequestBody TransaccionDeAlquiler pagos) {
+    public TransaccionDeAlquiler putTransacciones(@Validated @RequestBody TransaccionDeAlquiler pagos) {
         if (transaccionesRep.existsById(pagos.id())) return transaccionesRep.save(pagos);
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + pagos.id() + " not found.");
     }

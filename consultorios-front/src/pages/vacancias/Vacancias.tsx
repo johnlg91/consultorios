@@ -223,6 +223,9 @@ const Vacancias = () => {
 							manejarAbrirFormulario={manejarAbrirFormulario}
 							setCoordenadaParaEditar={setCoordenadaParaEditar}
 						/>
+						<TableRow>
+							<TableCell sx={{ height: 50 }} className={"table-cell"} />
+						</TableRow>
 					</TableBody>
 				</Table>
 			</TableContainer>

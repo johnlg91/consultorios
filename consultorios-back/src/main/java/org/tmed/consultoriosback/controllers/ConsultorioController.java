@@ -35,18 +35,18 @@ public class ConsultorioController {
     }
 
     @PostMapping("/consultorios")
-    public Consultorio postconsultorios(@Validated @RequestBody Consultorio consultorio) {
+    public Consultorio postConsultorios(@Validated @RequestBody Consultorio consultorio) {
         return consultoriosRep.save(consultorio);
     }
 
     @PutMapping(value = "/consultorios")
-    public Consultorio putconsultorios(@Validated @RequestBody Consultorio consultorio) {
+    public Consultorio putConsultorios(@Validated @RequestBody Consultorio consultorio) {
         if (consultoriosRep.existsById(consultorio.id())) return consultoriosRep.save(consultorio);
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id: " + consultorio.id() + " not found.");
     }
 
     @DeleteMapping("/consultorios/{id}")
-    public void deleteconsultorios(@PathVariable("id") long id) {
+    public void deleteConsultorios(@PathVariable("id") long id) {
         consultoriosRep.deleteConsultorio(id);
     }
 }

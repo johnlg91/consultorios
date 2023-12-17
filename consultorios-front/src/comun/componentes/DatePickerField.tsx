@@ -17,6 +17,8 @@ const DatePickerField: React.FC<FieldProps & TextFieldProps> = ({ error, helperT
 			>
 				<LocalizationProvider adapterLocale={"es"} dateAdapter={AdapterDayjs}>
 					<DatePicker
+						minDate={new Date("2020-01-01")}
+						views={["month", "year"]}
 						inputFormat={"DD/MM/YYYY"}
 						value={field.value}
 						onChange={(v: Date | null) => form.setFieldValue(field.name, v)}
