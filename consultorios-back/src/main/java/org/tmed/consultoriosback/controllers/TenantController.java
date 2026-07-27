@@ -7,15 +7,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.tmed.consultoriosback.model.Tenant;
 import org.tmed.consultoriosback.repository.TenantRepository;
+import org.tmed.consultoriosback.services.TenantService;
 
 @RestController
 @RequestMapping("/tenants")
 public class TenantController {
     private final TenantRepository tenantRepository;
+    private final TenantService tenantService;
 
     @Autowired
-    public TenantController(TenantRepository tenantRepository) {
+    public TenantController(TenantRepository tenantRepository, TenantService tenantService) {
         this.tenantRepository = tenantRepository;
+        this.tenantService = tenantService;
     }
 
     @GetMapping("/all")
@@ -55,6 +58,6 @@ public class TenantController {
 
     @DeleteMapping("/{id}")
     public void deactivate(@PathVariable("id") long id) {
-        tenantRepository.deactivate(id);
+        tenantService.deactivate(id);
     }
 }
