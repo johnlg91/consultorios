@@ -5,21 +5,21 @@ import org.springframework.stereotype.Service;
 import org.tmed.consultoriosback.email.EmailDetails;
 import org.tmed.consultoriosback.email.EmailServiceImpl;
 import org.tmed.consultoriosback.model.DTO.ContratoSinPagar;
-import org.tmed.consultoriosback.model.Profesional;
+import org.tmed.consultoriosback.model.Tenant;
 import org.tmed.consultoriosback.repository.ContratosDeAlquilerRepositorio;
-import org.tmed.consultoriosback.repository.ProfesionalesRepositorio;
+import org.tmed.consultoriosback.repository.TenantRepository;
 
 @Service
 public class RecordatorioDePagoService {
 
     private final EmailServiceImpl emailService;
     private final ContratosDeAlquilerRepositorio contratoRepo;
-    private final ProfesionalesRepositorio profesionalRepo;
+    private final TenantRepository tenantRepository;
 
-    public RecordatorioDePagoService(EmailServiceImpl emailService, ContratosDeAlquilerRepositorio contratoRepo, ProfesionalesRepositorio profesionalRepo) {
+    public RecordatorioDePagoService(EmailServiceImpl emailService, ContratosDeAlquilerRepositorio contratoRepo, TenantRepository tenantRepository) {
         this.emailService = emailService;
         this.contratoRepo = contratoRepo;
-        this.profesionalRepo = profesionalRepo;
+        this.tenantRepository = tenantRepository;
     }
 
     @Scheduled(cron = "0 0 8 28 * ?")  // Primer día de cada mes
@@ -32,7 +32,8 @@ public class RecordatorioDePagoService {
     }
 
     private EmailDetails crearDetalleEmail(ContratoSinPagar contrato) {
-        Profesional profesional = profesionalRepo.getProfesionales(contrato.idProfesional());
+        Tenant tenant = tenantRepository.findById(contrato.idProfesional())
+                .orElseThrow(() -> new IllegalStateException("Tenant " + contrato.idProfesional() + " not found"));
         String asunto = "Recordatorio de Pago Pendiente";
         String cuerpo = String.format(
                 """
@@ -42,10 +43,10 @@ public class RecordatorioDePagoService {
 
                         Saludos cordiales,
                         El equipo de Consultorios""",
-                profesional.nombre() + " " + profesional.apellido(),
+                tenant.firstName() + " " + tenant.lastName(),
                 contrato.id(),
                 contrato.costoPorModulo());
 
-        return new EmailDetails(profesional.eMail(), cuerpo, asunto, null);
+        return new EmailDetails(tenant.email(), cuerpo, asunto, null);
     }
 }
