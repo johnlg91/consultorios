@@ -37,7 +37,8 @@ occupancy schedule with room for one-off extra bookings.
   into the 8.12+ range, `javax.*` → `jakarta.*` (mail + servlet code — a small, isolated 5-file
   change, see §6), MySQL connector removed.
 - **Office photos**: not needed. **Payment evidence photos** (proof of a money transfer): needed —
-  stored as files on local disk with a path reference in the DB, not a blob.
+  stored as a BLOB column in the DB, not as files on disk (reconsidered from an earlier filesystem
+  plan — see §6 for why).
 - **Notifications**: stay email-only for now. A WhatsApp bot is a real future idea, but explicitly
   deferred — not designing an abstraction for it prematurely.
 - **Frontend stack**: React + Vite + TypeScript — not Create React App, which (not React itself)
@@ -84,7 +85,7 @@ new model needs to handle:
 | **TenantActivity** (NEW — replaces ContratoDeAlquiler; no manual "create contract" step) | tenant_id, office_id, start_date, end_date (nullable = still open), monthly_rate, notes | A tenant can have several concurrent open ones against *different* offices. Each ends independently, or all open ones close when the Tenant is disabled. Drops the old `tipoDeAlquiler` (NORMAL/EXCEPCIONAL) distinction — verified it was never actually used in billing, only in two dead-end filter endpoints. |
 | **Vacancy** (was AlquilerVacancia) | tenant_activity_id, day_of_week, start_time, end_time | The normal recurring weekly pattern; several rows per tenant activity is normal (e.g. Mon 8-12 + Wed 8-12). Hours derive from start/end time, so fractional módulos fall out naturally. |
 | **ExtraHours** (NEW) | tenant_activity_id, date (a specific day, not a weekday), start_time, end_time, rate_charged, active | One-off hours beyond the normal Vacancy pattern. Defaults `rate_charged` to `office.monthly_module_price ÷ 4`, overridable. Validated against conflicts; reflected in the vacancy matrix, occupancy reports, and that month's bill. |
-| **Payment** (was TransaccionDeAlquiler) | tenant_activity_id, transaction_date, type, payment_method, amount (BigDecimal), evidence_image_path (NEW, nullable), active | Evidence photos stored on disk (e.g. `data/payment-evidence/`), only the path kept in the DB. |
+| **Payment** (was TransaccionDeAlquiler) | tenant_activity_id, transaction_date, type, payment_method, amount (BigDecimal), evidence_image (NEW, BLOB, nullable), active | Evidence photos stored directly as a BLOB — keeps the single H2 file as the one thing to back up, and the upload/DB-update stays a single atomic row write instead of two separate steps (file write + row update) that could fall out of sync. |
 | **Expense** (was Expensa) | description, expense_date, amount (BigDecimal), recurrence, payment_date, active | Renamed only, not restructured. |
 
 **Money/date types**: `BigDecimal` for all money fields (the old `TransaccionDeAlquiler.cantidad`
@@ -124,7 +125,8 @@ Still open, not blocking Phase 1:
 - **H2/Flyway config**: `jdbc:h2:file:./data/consultorios-db;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE`
   for the real app; same flags on `jdbc:h2:mem:consultorios-test;DB_CLOSE_DELAY=-1` for tests (the
   `DB_CLOSE_DELAY=-1` matters — without it an in-memory H2 DB can vanish between pooled-connection
-  closes mid-test-run). `./data/` gitignored, same convention later for `data/payment-evidence/`.
+  closes mid-test-run). `./data/` gitignored (just the H2 file itself now — payment evidence
+  lives in the DB as a BLOB, not on disk, keeping the single-file-to-back-up property intact).
   **Gotcha found the hard way**: Spring Data JDBC always quotes generated identifiers, lowercase
   (e.g. `INSERT INTO "office"`) — but H2 upper-cases *unquoted* DDL by default, so a plain
   `create table office (...)` migration actually creates `OFFICE`, and every quoted-lowercase
@@ -192,9 +194,10 @@ major framework bump both in flight at once.
 Debt/balance service, updated vacancy matrix query (Vacancy + ExtraHours combined for a given
 week), fixed occupancy report math (bug #6 above).
 
-### Phase 3 — Payment evidence upload
-File-storage service, validation (type/size), retrieval — the column/endpoints are scaffolded in
-step 1.7, this phase is the real implementation once usage patterns are clearer.
+### Phase 3 — Payment evidence upload polish
+Upload/retrieval already work as of step 1.7 (BLOB column, no file-storage service needed). This
+phase is about validation (file type/size limits beyond the basic 10MB request-size cap already
+set) once real usage patterns are clearer.
 
 ### Phase 4 — Testing
 Real coverage now that H2 makes it practical — conflict validation, TenantActivity lifecycle,

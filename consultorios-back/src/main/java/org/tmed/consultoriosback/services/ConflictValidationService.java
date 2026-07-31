@@ -11,13 +11,10 @@ import org.tmed.consultoriosback.repository.TenantActivityRepository;
 import org.tmed.consultoriosback.repository.VacancyRepository;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Service
 public class ConflictValidationService {
-
-    private static final LocalDate FAR_FUTURE = LocalDate.of(9999, 12, 31);
 
     private final TenantActivityRepository tenantActivityRepository;
     private final VacancyRepository vacancyRepository;
@@ -40,8 +37,7 @@ public class ConflictValidationService {
                     throw conflict("recurring slot", conflictId);
                 });
 
-        LocalDate toDate = activity.endDate() != null ? activity.endDate() : FAR_FUTURE;
-        for (ExtraHours extraHours : extraHoursRepository.findActiveInRange(officeId, activity.startDate(), toDate)) {
+        for (ExtraHours extraHours : extraHoursRepository.findActiveInRange(officeId, activity.startDate(), activity.endDate())) {
             if (extraHours.date().getDayOfWeek() == candidate.dayOfWeek()
                     && overlaps(candidate.startTime(), candidate.endTime(), extraHours.startTime(), extraHours.endTime())) {
                 throw conflict("extra-hours booking", extraHours.id());

@@ -38,7 +38,8 @@ public interface ExtraHoursRepository extends CrudRepository<ExtraHours, Long> {
             JOIN tenant_activities ta ON eh.tenant_activity_id = ta.id
             WHERE ta.office_id = :officeId
               AND eh.active = true
-              AND eh.date BETWEEN :fromDate AND :toDate
+              AND eh.date >= :fromDate
+              AND (:toDate IS NULL OR eh.date <= :toDate)
             """)
     Iterable<ExtraHours> findActiveInRange(@Param("officeId") long officeId,
                                             @Param("fromDate") LocalDate fromDate,
